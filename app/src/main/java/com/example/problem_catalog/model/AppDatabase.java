@@ -6,9 +6,10 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import com.example.problem_catalog.BuildConfig;
 import com.example.problem_catalog.model.entities.Problem;
 
-@Database(entities = Problem.class, version = 1)
+@Database(entities = {Problem.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static volatile AppDatabase INSTANCE;
@@ -19,7 +20,7 @@ public abstract class AppDatabase extends RoomDatabase {
             synchronized (AppDatabase.class){
                 if(INSTANCE == null){
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            AppDatabase.class, "problem_catalog_db")
+                            AppDatabase.class, BuildConfig.DB_NAME)
                             .build();
                 }
             }

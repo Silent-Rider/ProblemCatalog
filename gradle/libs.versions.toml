@@ -2,24 +2,21 @@
 agp = "8.8.1"
 hiltAndroid = "2.48"
 junit = "4.13.2"
-junitVersion = "1.1.5"
-espressoCore = "3.5.1"
-appcompat = "1.6.1"
+junitVersion = "1.2.1"
+espressoCore = "3.6.1"
+appcompat = "1.7.0"
 lifecycleViewmodelKtx = "2.8.7"
 loggingInterceptor = "4.9.1"
 lombok = "1.18.36"
-material = "1.10.0"
-activity = "1.8.0"
-constraintlayout = "2.1.4"
+material = "1.12.0"
+activity = "1.10.0"
+constraintlayout = "2.2.0"
 retrofit = "2.9.0"
-roomLivedata = "2.5.2"
 roomRuntime = "2.6.1"
+slf4jApi = "2.0.16"
 
 [libraries]
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRuntime" }
-androidx-room-livedata = { module = "androidx.room:room-livedata", version.ref = "roomLivedata" }
-androidx-room-rxjava2 = { module = "androidx.room:room-rxjava2", version.ref = "roomLivedata" }
-androidx-room-rxjava3 = { module = "androidx.room:room-rxjava3", version.ref = "roomLivedata" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -29,12 +26,12 @@ appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "a
 lifecycle-livedata-ktx = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref = "lifecycleViewmodelKtx" }
 lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
 logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "loggingInterceptor" }
-lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
+slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4jApi" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

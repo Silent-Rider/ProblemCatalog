@@ -4,5 +4,6 @@
     <string name="menuButtonDescription">Меню</string>
     <string name="updateButton">Обновить справочник</string>
     <string name="aboutButton">О программе</string>
+    <string name="closeButton">Закрыть меню</string>
     <string name="hint">Введите текст для поиска</string>
 </resources>

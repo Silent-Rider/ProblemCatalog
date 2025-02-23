@@ -14,6 +14,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField ("String", "DB_NAME", "problem_catalog_db")
+        buildConfigField("String", "SERVER_BASE_URL", "http://81.161.220.59:8709/api/")
     }
 
     buildTypes {
@@ -24,10 +27,16 @@ android {
                 "proguard-rules.pro"
             )
         }
+
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+    }
+    buildToolsVersion = "35.0.0"
+
+    buildFeatures{
+        buildConfig = true
     }
 }
 
@@ -55,14 +64,10 @@ dependencies {
     // Room
     implementation(libs.room.runtime)
     implementation(libs.androidx.room.ktx)
-    implementation(libs.androidx.room.livedata)
-    implementation(libs.androidx.room.rxjava2)
-    implementation(libs.androidx.room.rxjava3)
 
     // Dagger Hilt
     implementation(libs.hilt.android)
 
-    // Lombok
-    compileOnly(libs.lombok)
-
+    // Slf4
+    implementation(libs.slf4j.api)
 }

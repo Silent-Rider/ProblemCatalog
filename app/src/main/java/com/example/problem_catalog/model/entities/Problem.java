@@ -4,10 +4,6 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter @Setter
 @Entity(tableName = "problems")
 public class Problem {
     @PrimaryKey(autoGenerate = true)
@@ -16,4 +12,29 @@ public class Problem {
     @ColumnInfo(name = "division_type")
     private Integer divisionType;
     private Boolean del;
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
+    public Boolean getDel() {
+        return del;
+    }
+    public void setDel(Boolean del) {
+        this.del = del;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public Integer getDivisionType() {
+        return divisionType;
+    }
+    public void setDivisionType(Integer divisionType) {
+        this.divisionType = divisionType;
+    }
+
 }
