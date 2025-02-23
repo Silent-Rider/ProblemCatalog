@@ -5,9 +5,9 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".gui.MainActivity">
 
-    <!--Toolbar с названием и кнопкой для открытия всплывающего меню -->
+    <!--Toolbar with application title and button for pop-up menu -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
@@ -23,7 +23,7 @@
         app:title="@string/title"
         app:titleTextAppearance="@style/TextAppearance.AppCompat.Large"
         app:titleTextColor="@android:color/white">
-        <!-- Кнопка для открытия всплывающего меню -->
+        <!-- Button for opening pop-up menu -->
         <ImageButton
             android:id="@+id/menuButton"
             android:layout_width="48dp"
@@ -35,7 +35,7 @@
             android:src="@android:drawable/ic_menu_moreoverflow_normal_holo_light" />
     </androidx.appcompat.widget.Toolbar>
 
-    <!-- Всплывающее меню справа-->
+    <!-- Pop-up menu-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/sidePanel"
         android:layout_width="0dp"
@@ -46,7 +46,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintWidth_percent="0.3">
-        <!-- Кнопка "Обновить справочник" -->
+        <!-- Update button -->
         <Button
             android:id="@+id/updateButton"
             android:layout_width="0dp"
@@ -57,9 +57,20 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
+        <!-- About button -->
+        <Button
+            android:id="@+id/aboutButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/aboutButton"
+            android:background="#FF8C00"
+            android:layout_margin="16dp"
+            app:layout_constraintTop_toBottomOf="@id/updateButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- EditText для поиска -->
+    <!-- EditText for searching -->
     <EditText
         android:id="@+id/searchEditText"
         android:layout_width="409dp"
@@ -77,7 +88,7 @@
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintWidth_percent="0.9" />
 
-    <!-- RecyclerView для списка последствий нарушений -->
+    <!-- RecyclerView as a list of problems -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="0dp"

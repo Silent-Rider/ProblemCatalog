@@ -40,4 +40,29 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
+    // Lifecycle
+    implementation(libs.lifecycle.viewmodel.ktx)
+    implementation(libs.lifecycle.livedata.ktx)
+
+    // Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson) // Для JSON
+
+    // Logging
+    implementation(libs.logging.interceptor)
+
+    // Room
+    implementation(libs.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.livedata)
+    implementation(libs.androidx.room.rxjava2)
+    implementation(libs.androidx.room.rxjava3)
+
+    // Dagger Hilt
+    implementation(libs.hilt.android)
+
+    // Lombok
+    compileOnly(libs.lombok)
+
 }

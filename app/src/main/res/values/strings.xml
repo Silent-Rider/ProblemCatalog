@@ -3,5 +3,6 @@
     <string name="title">Справочник последствий</string>
     <string name="menuButtonDescription">Меню</string>
     <string name="updateButton">Обновить справочник</string>
+    <string name="aboutButton">О программе</string>
     <string name="hint">Введите текст для поиска</string>
 </resources>
