@@ -32,7 +32,7 @@
             android:layout_marginEnd="12dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/menuButtonDescription"
-            android:src="@android:drawable/ic_menu_moreoverflow_normal_holo_light" />
+            android:src="@drawable/baseline_more_vert_24" />
     </androidx.appcompat.widget.Toolbar>
 
     <!-- Pop-up menu-->

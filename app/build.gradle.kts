@@ -15,8 +15,8 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField ("String", "DB_NAME", "problem_catalog_db")
-        buildConfigField("String", "SERVER_BASE_URL", "http://81.161.220.59:8709/api/")
+        buildConfigField ("String", "DB_NAME", "\"problem_catalog_db\"")
+        buildConfigField("String", "SERVER_BASE_URL", "\"http://81.161.220.59:8709/api/\"")
     }
 
     buildTypes {
@@ -70,4 +70,7 @@ dependencies {
 
     // Slf4
     implementation(libs.slf4j.api)
+
+    //Material Components
+    implementation (libs.material.v190)
 }

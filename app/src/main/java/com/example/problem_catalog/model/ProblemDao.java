@@ -1,10 +1,7 @@
 package com.example.problem_catalog.model;
 
-import androidx.lifecycle.LiveData;
 import androidx.room.*;
-
 import com.example.problem_catalog.model.entities.Problem;
-
 import java.util.List;
 
 @Dao
