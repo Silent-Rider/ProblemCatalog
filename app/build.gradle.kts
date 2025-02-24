@@ -1,5 +1,8 @@
+import com.android.build.api.dsl.Packaging
+
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -41,7 +44,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
@@ -56,21 +58,19 @@ dependencies {
 
     // Retrofit
     implementation(libs.retrofit)
-    implementation(libs.converter.gson) // Для JSON
+    implementation(libs.converter.gson)
 
     // Logging
     implementation(libs.logging.interceptor)
+    implementation(libs.slf4j.api)
 
     // Room
     implementation(libs.room.runtime)
     implementation(libs.androidx.room.ktx)
+    annotationProcessor(libs.room.compiler)
 
     // Dagger Hilt
     implementation(libs.hilt.android)
-
-    // Slf4
-    implementation(libs.slf4j.api)
-
-    //Material Components
-    implementation (libs.material.v190)
+    implementation (libs.androidx.activity.ktx)
+    annotationProcessor(libs.hilt.compiler)
 }

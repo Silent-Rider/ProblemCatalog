@@ -25,67 +25,21 @@
         app:titleTextColor="@android:color/white">
         <!-- Button for opening pop-up menu -->
         <ImageButton
-            android:id="@+id/menuButton"
+            android:id="@+id/openPanelButton"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_gravity="end"
-            android:layout_marginEnd="12dp"
+            android:layout_marginEnd="10dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/menuButtonDescription"
             android:src="@drawable/baseline_more_vert_24" />
     </androidx.appcompat.widget.Toolbar>
 
-    <!-- Pop-up menu-->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/sidePanel"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="#FFFFFF"
-        android:visibility="gone"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintWidth_percent="0.3">
-        <!-- Update button -->
-        <Button
-            android:id="@+id/updateButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/updateButton"
-            android:background="#FF8C00"
-            android:layout_margin="16dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-        <!-- About button -->
-        <Button
-            android:id="@+id/aboutButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/aboutButton"
-            android:background="#FF8C00"
-            android:layout_margin="16dp"
-            app:layout_constraintTop_toBottomOf="@id/updateButton"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-        <!-- Close button -->
-        <ImageButton
-            android:id="@+id/closeButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@android:drawable/ic_menu_close_clear_cancel"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/closeButton"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_margin="8dp" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
     <!-- EditText for searching -->
     <EditText
         android:id="@+id/searchEditText"
-        android:layout_width="409dp"
-        android:layout_height="48dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:autofillHints="search"
         android:background="@android:drawable/editbox_background"
         android:drawableStart="@android:drawable/ic_menu_search"
@@ -109,5 +63,64 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
+
+    <!-- Pop-up panel-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/sidePanel"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="4dp"
+        android:background="#FFA07A"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintWidth_percent="0.42">
+
+        <!-- Close button -->
+        <ImageButton
+            android:id="@+id/closePanelButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/closeButton"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Update button -->
+        <Button
+            android:id="@+id/updateButton"
+            android:layout_width="142dp"
+            android:layout_height="69dp"
+            android:layout_margin="16dp"
+            android:backgroundTint="#9ACD32"
+            android:text="@string/updateButton"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/closePanelButton"
+            tools:layout_editor_absoluteY="67dp" />
+
+        <!-- About button -->
+        <Button
+            android:id="@+id/aboutButton"
+            android:layout_width="141dp"
+            android:layout_height="67dp"
+            android:layout_margin="16dp"
+            android:backgroundTint="#20B2AA"
+            android:text="@string/aboutButton"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/updateButton"
+            tools:layout_editor_absoluteY="151dp" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

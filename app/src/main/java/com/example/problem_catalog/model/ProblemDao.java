@@ -8,6 +8,7 @@ import java.util.List;
 public interface ProblemDao {
     @Query("DELETE FROM problems")
     void clear();
+
     @Insert
     void insertAll(List<Problem> problems);
 

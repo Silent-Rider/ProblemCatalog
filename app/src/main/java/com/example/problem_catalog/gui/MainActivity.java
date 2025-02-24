@@ -3,6 +3,7 @@ package com.example.problem_catalog.gui;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
@@ -14,6 +15,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.problem_catalog.R;
@@ -29,12 +31,16 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class MainActivity extends AppCompatActivity {
 
     private AppViewModel viewModel;
-    private ViewGroup sidePanel;
-    private Button updateButton;
+    private boolean isSidePanelVisible = false;
+    //Activity
+    private ImageButton openPanelButton;
     private EditText searchEditText;
     private RecyclerViewAdapter adapter;
-    private boolean isSidePanelVisible = false;
-
+    // Side panel
+    private ViewGroup sidePanel;
+    private ImageButton closePanelButton;
+    private Button updateButton;
+    private Button aboutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +53,8 @@ public class MainActivity extends AppCompatActivity {
     private void launchActivity(){
         viewModel.getProblemsLiveData().observe(this, problems ->
             adapter.setProblemsList(problems.stream().map(Problem::getName).collect(Collectors.toList())));
-        ImageButton menuButton = findViewById(R.id.menuButton);
-        ImageButton closeButton = findViewById(R.id.closeButton);
-        menuButton.setOnClickListener(v -> toggleSidePanel());
-        closeButton.setOnClickListener(v -> toggleSidePanel());
+        openPanelButton.setOnClickListener(v -> toggleSidePanel());
+        closePanelButton.setOnClickListener(v -> toggleSidePanel());
         updateButton.setOnClickListener(v -> viewModel.updateData());
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -71,13 +75,19 @@ public class MainActivity extends AppCompatActivity {
 
     private void initializeActivity(){
         viewModel = new ViewModelProvider(this).get(AppViewModel.class);
-        sidePanel = findViewById(R.id.sidePanel);
-        updateButton = findViewById(R.id.updateButton);
+
+        openPanelButton = findViewById(R.id.openPanelButton);
         searchEditText = findViewById(R.id.searchEditText);
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new RecyclerViewAdapter(new ArrayList<>());
         recyclerView.setAdapter(adapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+
+        sidePanel = findViewById(R.id.sidePanel);
+        updateButton = findViewById(R.id.updateButton);
+        closePanelButton = findViewById(R.id.closePanelButton);
+        aboutButton = findViewById(R.id.aboutButton);
     }
 
     private void adjustActivity(){

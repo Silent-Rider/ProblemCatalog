@@ -40,8 +40,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return problemsList.size();
     }
 
-    public void setProblemsList(List<String> problemsList) {
-        this.problemsList = problemsList;
+    public void setProblemsList(List<String> newProblemsList) {
+        int oldSize = problemsList.size();
+        problemsList.clear();
+        problemsList.addAll(newProblemsList);
+
+        if (newProblemsList.size() > oldSize) {
+            notifyItemRangeInserted(oldSize, newProblemsList.size() - oldSize);
+        } else if (newProblemsList.size() < oldSize) {
+            notifyItemRangeRemoved(newProblemsList.size(), oldSize - newProblemsList.size());
+        }
+        notifyItemRangeChanged(0, newProblemsList.size());
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -49,7 +58,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.itemText);
+            textView = itemView.findViewById(R.id.textItem);
         }
     }
 }

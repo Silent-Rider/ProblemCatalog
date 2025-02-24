@@ -12,17 +12,12 @@ public class Problem {
     @ColumnInfo(name = "division_type")
     private Integer divisionType;
     private Boolean del;
+
     public Long getId() {
         return id;
     }
     public void setId(Long id) {
         this.id = id;
-    }
-    public Boolean getDel() {
-        return del;
-    }
-    public void setDel(Boolean del) {
-        this.del = del;
     }
     public String getName() {
         return name;
@@ -36,5 +31,10 @@ public class Problem {
     public void setDivisionType(Integer divisionType) {
         this.divisionType = divisionType;
     }
-
+    public Boolean getDel() {
+        return del;
+    }
+    public void setDel(Boolean del) {
+        this.del = del;
+    }
 }

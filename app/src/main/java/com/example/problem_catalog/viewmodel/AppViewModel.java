@@ -1,19 +1,13 @@
 package com.example.problem_catalog.viewmodel;
 
-import android.app.Application;
-
 import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.example.problem_catalog.client.ApiService;
-import com.example.problem_catalog.model.AppDatabase;
 import com.example.problem_catalog.model.ProblemDao;
 import com.example.problem_catalog.model.entities.Problem;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -27,23 +21,28 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 @HiltViewModel
-public class AppViewModel extends AndroidViewModel {
-
-    private static final Logger logger = LoggerFactory.getLogger(AppViewModel.class);
+public class AppViewModel extends ViewModel {
     private final MutableLiveData<List<Problem>> problemsLiveData = new MutableLiveData<>();
-
     private final ApiService apiService;
     private final ProblemDao problemDao;
     @Inject
-    public AppViewModel(@NonNull Application application, ApiService apiService) {
-        super(application);
+    public AppViewModel(ApiService apiService, ProblemDao problemDao) {
         this.apiService = apiService;
-        AppDatabase database = AppDatabase.getInstance(application);
-        problemDao = database.problemDao();
+        this.problemDao = problemDao;
     }
 
     public LiveData<List<Problem>> getProblemsLiveData(){
         return problemsLiveData;
+    }
+
+    public void updateData(){
+        CompletableFuture.runAsync(() -> {
+            List<Problem> problems = requestForUpdate().join();
+            if(problems != null && !problems.isEmpty()) {
+                updateDatabase(problems);
+                problemsLiveData.postValue(problemDao.findAll());
+            }
+        });
     }
 
     public void reduceProblemsByRegex(String regex){
@@ -66,39 +65,28 @@ public class AppViewModel extends AndroidViewModel {
        });
     }
 
-    public boolean updateData(){
-        MutableLiveData<List<Problem>> problems = requestForUpdate();
-        if(problems.getValue() != null) {
-            CompletableFuture.runAsync(() -> {
-                updateDatabase(problems.getValue());
-            }).thenRun(() -> {
-                problemsLiveData.postValue(problemDao.findAll());
-            });
-            return true;
-        }
-        else return false;
-    }
-
-    private MutableLiveData<List<Problem>> requestForUpdate(){
-        MutableLiveData<List<Problem>> problemsLiveData = new MutableLiveData<>();
+    private CompletableFuture<List<Problem>> requestForUpdate(){
+        CompletableFuture<List<Problem>> future = new CompletableFuture<>();
         Call<List<Problem>> call = apiService.getProblems();
         call.enqueue(new Callback<>() {
             @Override
             public void onResponse(@NonNull Call<List<Problem>> call, @NonNull Response<List<Problem>> response) {
-                if(response.isSuccessful()){
-                   List<Problem> problems = response.body();
-                   problemsLiveData.setValue(problems);
-                } else{
-                    logger.error("An error occurred during HTTP request");
-                }
+                if (response.isSuccessful()) {
+                    List<Problem> problems = response.body();
+                    if (problems != null) future.complete(problems);
+                    else
+                        future.completeExceptionally(new IllegalStateException("Response body is null"));
+                } else
+                    future.completeExceptionally(new RuntimeException("Request failed with code: "
+                            + response.code()));
             }
 
             @Override
-            public void onFailure(@NonNull Call<List<Problem>> call, Throwable t) {
-                logger.error("An error occurred during HTTP request. Error message: {}", t.getMessage());
+            public void onFailure(@NonNull Call<List<Problem>> call, @NonNull Throwable t) {
+                future.completeExceptionally(t);
             }
         });
-        return problemsLiveData;
+        return future;
     }
 
     private void updateDatabase(List<Problem> problems){
