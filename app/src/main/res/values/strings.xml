@@ -1,9 +1,13 @@
 <resources>
-    <string name="app_name">Problem Catalog</string>
+    <string name="app_name">Справочник последствий</string>
     <string name="title">Справочник последствий</string>
     <string name="menuButtonDescription">Меню</string>
     <string name="updateButton">Обновить справочник</string>
     <string name="aboutButton">О программе</string>
     <string name="closeButton">Закрыть меню</string>
     <string name="hint">Введите текст для поиска</string>
+    <string name="aboutTitle">"О программе"</string>
+    <string name="aboutMessage">"Программа была разработана Silent Rider'ом"</string>
+    <string name="ok">"Ок"</string>
+    <string name="errorTitle">Ошибка</string>
 </resources>

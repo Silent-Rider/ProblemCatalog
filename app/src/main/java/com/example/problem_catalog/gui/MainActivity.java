@@ -3,12 +3,12 @@ package com.example.problem_catalog.gui;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     private void launchActivity(){
         viewModel.getProblemsLiveData().observe(this, problems ->
             adapter.setProblemsList(problems.stream().map(Problem::getName).collect(Collectors.toList())));
+        viewModel.getErrorLiveData().observe(this, error -> showAboutDialog(true));
         openPanelButton.setOnClickListener(v -> toggleSidePanel());
         closePanelButton.setOnClickListener(v -> toggleSidePanel());
         updateButton.setOnClickListener(v -> viewModel.updateData());
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {}
         });
+        aboutButton.setOnClickListener(v -> showAboutDialog(false));
     }
 
     private void initializeActivity(){
@@ -108,5 +110,18 @@ public class MainActivity extends AppCompatActivity {
             sidePanel.setVisibility(View.VISIBLE);
             isSidePanelVisible = true;
         }
+    }
+
+    private void showAboutDialog(boolean isError) {
+        String title = isError ? getString(R.string.errorTitle) : getString(R.string.aboutTitle);
+        String message = isError ? viewModel.getErrorLiveData().getValue() : getString(R.string.aboutMessage);
+        new AlertDialog.Builder(this)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(getString(R.string.ok), (dialog, which) -> {
+                    dialog.dismiss();
+                })
+                .create()
+                .show();
     }
 }

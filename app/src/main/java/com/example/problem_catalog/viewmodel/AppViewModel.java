@@ -23,6 +23,7 @@ import retrofit2.Response;
 @HiltViewModel
 public class AppViewModel extends ViewModel {
     private final MutableLiveData<List<Problem>> problemsLiveData = new MutableLiveData<>();
+    private final MutableLiveData<String> errorLiveData = new MutableLiveData<>();
     private final ApiService apiService;
     private final ProblemDao problemDao;
     @Inject
@@ -33,6 +34,10 @@ public class AppViewModel extends ViewModel {
 
     public LiveData<List<Problem>> getProblemsLiveData(){
         return problemsLiveData;
+    }
+
+    public LiveData<String> getErrorLiveData() {
+        return errorLiveData;
     }
 
     public void updateData(){
@@ -74,16 +79,21 @@ public class AppViewModel extends ViewModel {
                 if (response.isSuccessful()) {
                     List<Problem> problems = response.body();
                     if (problems != null) future.complete(problems);
-                    else
+                    else {
                         future.completeExceptionally(new IllegalStateException("Response body is null"));
-                } else
+                        errorLiveData.setValue("Нет данных от сервера");
+                    }
+                } else {
                     future.completeExceptionally(new RuntimeException("Request failed with code: "
                             + response.code()));
+                    errorLiveData.setValue("Не удалось подключиться к серверу");
+                }
             }
 
             @Override
             public void onFailure(@NonNull Call<List<Problem>> call, @NonNull Throwable t) {
                 future.completeExceptionally(t);
+                errorLiveData.setValue("Нет интернет-соединения");
             }
         });
         return future;
