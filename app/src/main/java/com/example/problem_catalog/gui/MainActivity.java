@@ -51,33 +51,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void launchActivity(){
-        viewModel.getProblemsLiveData().observe(this, problems ->
-            adapter.setProblemsList(problems.stream().map(Problem::getName).collect(Collectors.toList())));
-        viewModel.getErrorLiveData().observe(this, error -> showAboutDialog(true));
+        viewModel.resetProblems();
         openPanelButton.setOnClickListener(v -> toggleSidePanel());
         closePanelButton.setOnClickListener(v -> toggleSidePanel());
         updateButton.setOnClickListener(v -> viewModel.updateData());
+        aboutButton.setOnClickListener(v -> showAboutDialog(false));
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String text = String.valueOf(s).trim();
-                if (!text.isEmpty()) {
-                    viewModel.reduceProblemsByRegex(text);
-                } else {
-                    viewModel.resetProblems();
-                }
+                if (!text.isEmpty()) viewModel.reduceProblemsByRegex(text);
+                else viewModel.resetProblems();
             }
             @Override
             public void afterTextChanged(Editable s) {}
         });
-        aboutButton.setOnClickListener(v -> showAboutDialog(false));
     }
 
     private void initializeActivity(){
-        viewModel = new ViewModelProvider(this).get(AppViewModel.class);
-
         openPanelButton = findViewById(R.id.openPanelButton);
         searchEditText = findViewById(R.id.searchEditText);
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
@@ -90,6 +83,11 @@ public class MainActivity extends AppCompatActivity {
         updateButton = findViewById(R.id.updateButton);
         closePanelButton = findViewById(R.id.closePanelButton);
         aboutButton = findViewById(R.id.aboutButton);
+
+        viewModel = new ViewModelProvider(this).get(AppViewModel.class);
+        viewModel.getProblemsLiveData().observe(this, problems ->
+                adapter.setProblemsList(problems.stream().map(Problem::getName).collect(Collectors.toList())));
+        viewModel.getErrorLiveData().observe(this, error -> showAboutDialog(true));
     }
 
     private void adjustActivity(){
@@ -114,13 +112,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void showAboutDialog(boolean isError) {
         String title = isError ? getString(R.string.errorTitle) : getString(R.string.aboutTitle);
-        String message = isError ? viewModel.getErrorLiveData().getValue() : getString(R.string.aboutMessage);
+        String message = isError ? viewModel.getErrorLiveData().getValue() :
+                getString(R.string.aboutMessage);
         new AlertDialog.Builder(this)
                 .setTitle(title)
                 .setMessage(message)
-                .setPositiveButton(getString(R.string.ok), (dialog, which) -> {
-                    dialog.dismiss();
-                })
+                .setPositiveButton(getString(R.string.ok), (dialog, which) ->
+                    dialog.dismiss())
                 .create()
                 .show();
     }
