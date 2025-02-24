@@ -62,8 +62,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 String text = String.valueOf(s).trim();
-                if (!text.isEmpty()) viewModel.reduceProblemsByRegex(text);
-                else viewModel.resetProblems();
+                if (text.isEmpty()) viewModel.resetProblems();
+                else viewModel.reduceProblemsByRegex(text);
             }
             @Override
             public void afterTextChanged(Editable s) {}

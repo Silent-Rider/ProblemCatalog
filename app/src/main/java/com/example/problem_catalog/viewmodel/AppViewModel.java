@@ -53,7 +53,7 @@ public class AppViewModel extends ViewModel {
     public void reduceProblemsByRegex(String regex){
         if(regex == null || regex.isEmpty()) return;
         CompletableFuture.runAsync(() -> {
-            List<Problem> originalProblems = problemsLiveData.getValue();
+            List<Problem> originalProblems = getAllProblems();
             if (originalProblems != null && !originalProblems.isEmpty()) {
                 List<Problem> filteredProblems = originalProblems.stream()
                         .filter(x -> x.getName().toLowerCase().contains(regex.toLowerCase()))
@@ -101,5 +101,9 @@ public class AppViewModel extends ViewModel {
 
     private void updateDatabase(List<Problem> problems){
         problemDao.updateProblems(problems);
+    }
+
+    private List<Problem> getAllProblems(){
+        return problemDao.findAll();
     }
 }
